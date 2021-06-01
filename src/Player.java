@@ -17,12 +17,15 @@ public class Player {
         return name;
     }
 
-   //TO DO: public addCardToDeck(Deck toDeck, Deck fromDeck, Card card){
+    // taking the top card from 1 deck and adding it to the second deck
+    public void addCardToDeck(Deck toDeck, Deck fromDeck){
 
-   // }
+        toDeck.addCard(fromDeck.removeTopCard());
+    }
 
-    public void drawCard(){
-        playingDeck.removeTopCard();
+    public Card drawCard(){
+
+        return playingDeck.removeTopCard();
     }
 
     public boolean outOfCards(){

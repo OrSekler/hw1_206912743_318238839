@@ -32,6 +32,7 @@ public class Deck{
     }
 
     public boolean isEmpty(){
+        // if the deck size is not 0, than it is not empty
         if (deck.size() != 0){
             return false;
         }
@@ -39,7 +40,7 @@ public class Deck{
         return true;
     }
 
-    public void Shuffle(){
+    public void shuffle(){
         Card temp;
         int rndIndex_1, rndIndex_2;
 
