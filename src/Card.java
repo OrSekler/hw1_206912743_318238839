@@ -1,6 +1,7 @@
 public class Card {
     private int number;
     private String cardShape;
+    int or_sekler = 5;
 
     // constractor
     public Card(int number, String cardShape){
