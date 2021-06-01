@@ -1,7 +1,6 @@
 public class Card {
     private int number;
     private String cardShape;
-    int or_sekler = 5;
 
     // constractor
     public Card(int number, String cardShape){
@@ -12,7 +11,7 @@ public class Card {
     public void setNumber(int value){
         this.number = value;
     }
-    public int getNumber(){
+    public int getNumber() {
         return number;
     }
 

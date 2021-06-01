@@ -23,10 +23,10 @@ public class Deck{
         deck.add(0, card);
     }
 
-    // removing the last card in the deck
+    // removing the top card in the deck
     public Card removeTopCard(){
-        Card lastInDeck = deck.get((deck.size())-1);
-        deck.remove((deck.size())-1);
+        Card lastInDeck = deck.get(0);
+        deck.remove(0);
 
         return lastInDeck;
     }
