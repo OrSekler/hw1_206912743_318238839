@@ -31,7 +31,7 @@ public class Card {
         else if(this.number == other.number){
             return 0;
         }
-        // return -1 if the current card is bigger than the other card
+        // return 1 if the current card is bigger than the other card
         return 1;
     }
 
@@ -39,21 +39,21 @@ public class Card {
     public String toString() {
         // if the card is a prince
         if (this.number == 11){
-            return "Prince of " + cardShape + '\'';
+            return "Prince of " + cardShape ;
         }
         // if the card is a queen
         if (this.number == 12){
-            return "Queen of " + cardShape + '\'';
+            return "Queen of " + cardShape ;
         }
         // if the card is a king
         if (this.number == 13){
-            return "King of " + cardShape + '\'';
+            return "King of " + cardShape;
         }
         // if the card is an ace
         if (this.number == 1){
-            return "Ace of " + cardShape + '\'';
+            return "Ace of " + cardShape;
         }
         // if the card is a regular number
-        return number + " of " + cardShape + '\'';
+        return number + " of " + cardShape ;
     }
 }

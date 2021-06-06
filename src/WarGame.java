@@ -120,5 +120,7 @@ public class WarGame {
                 }
             }
         }
+        return "bla";
     }
+
 }
