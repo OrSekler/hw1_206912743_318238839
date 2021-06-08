@@ -22,12 +22,12 @@ public class Card {
         return cardShape;
     }
 
-    public int Compare(Card other){
+    public int compare(Card other){
         // return -1 if the current card is smaller than the other card
         if (this.number < other.number){
             return -1;
         }
-        // return -1 if the current card is equal than the other card
+        // return 0 if the current card is equal than the other card
         else if(this.number == other.number){
             return 0;
         }
@@ -39,7 +39,7 @@ public class Card {
     public String toString() {
         // if the card is a prince
         if (this.number == 11){
-            return "Prince of " + cardShape ;
+            return "Jack of " + cardShape ;
         }
         // if the card is a queen
         if (this.number == 12){
