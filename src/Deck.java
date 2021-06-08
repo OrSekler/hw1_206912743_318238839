@@ -25,8 +25,8 @@ public class Deck{
 
     // removing the top card in the deck
     public Card removeTopCard(){
-        Card lastInDeck = deck.get(0);
-        deck.remove(0);
+        Card lastInDeck = deck.get(deck.size()-1);
+        deck.remove(deck.size()-1);
 
         return lastInDeck;
     }
