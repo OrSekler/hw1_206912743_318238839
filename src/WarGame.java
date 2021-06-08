@@ -19,6 +19,7 @@ public class WarGame {
     }
 
     public Player getStartingPlayer() {
+
         return startingPlayer;
     }
 
@@ -35,7 +36,7 @@ public class WarGame {
     }
 
     public void initializeGame() {
-        System.out.println("Initializing the Game...");
+        System.out.println("Initializing the game...");
         primaryDeck.shuffle();
 
         // decideing who is the starting player
@@ -43,7 +44,8 @@ public class WarGame {
             tempPlayer = startingPlayer;
             setStartingPlayer(secondPlayer);
             setSecondPlayer(tempPlayer);
-        }// we dont refer to  the case in which the names are identical - because it is given in the question
+        }
+        // we dont refer to  the case in which the names are identical - because it is given in the question
         // in case the players order ig good - do nothing
 
         // while the game deck is not empty, hand out cards to players
@@ -64,9 +66,8 @@ public class WarGame {
         // if the playing deck is empty and the winning deck is not empty, it puts the cards from the winning deck in the playing deck
         if (player_1.playingDeck.isEmpty()) {
             player_1.winingDeck.shuffle();
-            while(!(player_1.winingDeck.isEmpty())) {
-                player_1.addCardToDeck(player_1.playingDeck, player_1.winingDeck);
-            }
+            player_1.playingDeck = player_1.winingDeck;
+            player_1.winingDeck = new Deck(false);
         }
         // if they are not empty, the game can go on and the player draw a card
         if (isStartingPlayer) {
@@ -79,8 +80,10 @@ public class WarGame {
     }
 
     public boolean isInWar(Card card_1, Card card_2) {
+        //prints the cards the players drew
         System.out.println(startingPlayer.getName() + " drew " + card_1);
         System.out.println(secondPlayer.getName() + " drew " + card_2);
+
         // if starting player won the round
         if (card_1.compare(card_2) == 1) {
             // adding the cards in the turn decks to starting player winning deck
@@ -88,9 +91,11 @@ public class WarGame {
                 startingPlayer.addCardToDeck(startingPlayer.winingDeck, turnDeck_2);
                 startingPlayer.addCardToDeck(startingPlayer.winingDeck, turnDeck_1);
             }
+            //changing round winner to starting player
             roundWinner = startingPlayer;
             return false;
         }
+
         // if second player won the round
         else if (card_1.compare(card_2) == -1) {
             // adding the cards in the turn decks to second player winning deck
@@ -98,11 +103,13 @@ public class WarGame {
                 secondPlayer.addCardToDeck(secondPlayer.winingDeck, turnDeck_2);
                 secondPlayer.addCardToDeck(secondPlayer.winingDeck, turnDeck_1);
             }
+
+            //changing the round winner to the second player
             roundWinner = secondPlayer;
             return false;
         }
 
-        // if the cards are equal - entering a war!!
+        // if the cards are equal - entering a WAR!!
         else {
             warRound();
             return true;
@@ -111,16 +118,18 @@ public class WarGame {
 
     public void warRound() {
         System.out.println("Starting a war...");
-        // drawing the 2 war cards
+
+        // drawing the 2 war cards for each player
         for(int i = 0; i < 2; i++) {
-            // check if the game didn't end
+            // check if the game didn't end during the drawing of the cards
             if(checkEndGame(startingPlayer, secondPlayer, true)) {
                 System.out.println(startingPlayer.getName() + " drew a war card");
             }
             else {
                 return;
             }
-            // check if the game didn't end
+
+            // check if the game didn't end during the drawing of the cards
             if(checkEndGame(secondPlayer, startingPlayer, false)) {
                 System.out.println(secondPlayer.getName() + " drew a war card");
             }
@@ -128,30 +137,52 @@ public class WarGame {
                 return;
             }
         }
-        // check which player won the war according to the third card
+
+        // checks if the game didn't end in the 3rd card draw
         if(checkEndGame(startingPlayer, secondPlayer, true)) {
             if (checkEndGame(secondPlayer,startingPlayer, false)){
-                isInWar(turnDeck_1.deck.get(turnDeck_1.deck.size()-1), turnDeck_2.deck.get(turnDeck_2.deck.size()-1));
-                System.out.println(roundWinner.getName() + " won the war");
+
+                //checks who won the current war
+                isInWar(turnDeck_1.deck.get(turnDeck_1.deck.size()-1),
+                        turnDeck_2.deck.get(turnDeck_2.deck.size()-1));
             }
         }
     }
 
     public String start() {
-        int roundCounter =0;
+        int roundCounter = 0;
+
+        // initializing the game
         initializeGame();
+
+        // while no one won the game, play another turn
         while (gameWinner.getName().equals("winner")) {
-            roundCounter++;
-            System.out.println("------------------------- " + roundCounter + " number Round ------------------------- ");
+
+            // checks if no one of the players ran out of cards
             if(checkEndGame(startingPlayer, secondPlayer, true)) {
                 if (checkEndGame(secondPlayer,startingPlayer, false)){
-                    boolean inWar = isInWar(turnDeck_1.deck.get(turnDeck_1.deck.size()-1), turnDeck_2.deck.get(turnDeck_2.deck.size()-1));
-                    if (!(inWar)) {
-                        System.out.println(roundWinner.getName() + " won");
+                    roundCounter++;
+                    System.out.println("------------------------- Round number " +
+                            roundCounter + " -------------------------");
+
+                    // checks if we entered a war and decide who won the turn
+                    boolean inWar = isInWar(turnDeck_1.deck.get(turnDeck_1.deck.size()-1),
+                            turnDeck_2.deck.get(turnDeck_2.deck.size()-1));
+
+                    // if no one ran out of cards in last turn, print who won it
+                    if (gameWinner.getName().equals("winner")) {
+                        if (!(inWar)) {
+                            System.out.println(roundWinner.getName() + " won");
+                        }
+                        else{
+                            System.out.println(roundWinner.getName() + " won the war");
+                        }
                     }
                 }
             }
         }
+
+        // return the winner of the game
         return gameWinner.getName();
     }
 
